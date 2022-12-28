@@ -1,0 +1,29 @@
+<resources>
+    <string name="app_name">SampleCleverTapSegmentAndroid</string>
+    <string name="segment_write_key">AD5JgHYCv5XiOnJG8s0gcyQ7Ub01Fpik</string>
+    <string name="enter_identity">Enter Identity</string>
+    <string name="enter_email">Enter Email</string>
+    <string name="enter_mobile">Enter Mobile</string>
+    <string name="enter_name">Enter Name</string>
+    <string name="login">Login - Identify</string>
+    <string name="push_profile">Push Profile - Alias</string>
+    <string name="reset">Reset</string>
+    <string name="push_event_no_property">Push Event (No Property)</string>
+    <string name="push_event_string">Push Event (String)</string>
+    <string name="push_event_integer">Push Event (Integer)</string>
+    <string name="push_event_float">Push Event (Float)</string>
+    <string name="push_event_boolean">Push Event (Boolean)</string>
+    <string name="push_event_mixed">Push Event (Mixed)</string>
+    <string name="push_event_list">Push Event (List)</string>
+    <string name="push_charged_event">Push Charged Event</string>
+    <string name="select_date">Select DOB</string>
+    <string name="push_event_date">Push Event (Date)</string>
+    <string name="push_screen_event">Push Screen Event</string>
+    <string name="app_inbox">App Inbox</string>
+    <string name="raise_native_display_event">Raise Native Display Event</string>
+
+    <array name="gender_array">
+        <item>MALE</item>
+        <item>FEMALE</item>
+    </array>
+</resources>
