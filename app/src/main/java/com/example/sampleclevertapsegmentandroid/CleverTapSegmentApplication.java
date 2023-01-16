@@ -10,7 +10,9 @@ import com.clevertap.android.sdk.CleverTapAPI;
 import com.segment.analytics.Analytics;
 import com.segment.analytics.android.integrations.clevertap.CleverTapIntegration;
 
-public class CleverTapSegmentApplication extends Application {
+import java.util.HashMap;
+
+public class CleverTapSegmentApplication extends Application  {
 
     private static final String TAG = String.format("%s.%s", "CLEVERTAP", CleverTapSegmentApplication.class.getName());
     private static final String CLEVERTAP_KEY = "CleverTap";
@@ -65,4 +67,6 @@ public class CleverTapSegmentApplication extends Application {
     public Analytics getAnalytics() {
         return analytics;
     }
+
+
 }

@@ -5,13 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.viewpager.widget.PagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import com.bumptech.glide.Glide;
+import com.clevertap.android.sdk.CleverTapAPI;
+import com.clevertap.android.sdk.displayunits.model.CleverTapDisplayUnit;
 import com.clevertap.android.sdk.displayunits.model.CleverTapDisplayUnitContent;
+import com.example.sampleclevertapsegmentandroid.CleverTapSegmentApplication;
 import com.example.sampleclevertapsegmentandroid.R;
 
 import java.util.ArrayList;
@@ -20,15 +24,17 @@ public class ViewAdapter extends PagerAdapter {
 
     private Context context;
     private LayoutInflater layoutInflater;
-    //private Integer[] images={R.drawable.one,R.drawable.two,R.drawable.three,R.drawable.four,R.drawable.five};
     ArrayList<CleverTapDisplayUnitContent> cleverTapDisplayUnitContents = new ArrayList<>();
+    ArrayList<CleverTapDisplayUnit> cleverTapDisplayUnits = new ArrayList<>();
+    private CleverTapAPI cleverTapAPI;
 
-    public ViewAdapter(Context context) {
+    public ViewAdapter(Context context,CleverTapAPI cleverTapAPI) {
         this.context = context;
-
+        this.cleverTapAPI = cleverTapAPI;
     }
 
-    public void setImages(ArrayList<CleverTapDisplayUnitContent> cleverTapDisplayUnitContents){
+    public void setImages(ArrayList<CleverTapDisplayUnit> cleverTapDisplayUnits, ArrayList<CleverTapDisplayUnitContent> cleverTapDisplayUnitContents){
+        this.cleverTapDisplayUnits = cleverTapDisplayUnits;
         this.cleverTapDisplayUnitContents = cleverTapDisplayUnitContents;
     }
 
@@ -54,6 +60,14 @@ public class ViewAdapter extends PagerAdapter {
         //imageView.setImageResource(Integer.parseInt(images.get(position)));
         ViewPager viewPager = (ViewPager) container;
         viewPager.addView(view, 0);
+
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(context, "You clicked "+cleverTapDisplayUnitContents.get(position).getTitle(), Toast.LENGTH_SHORT).show();
+                cleverTapAPI.pushDisplayUnitClickedEventForID(cleverTapDisplayUnits.get(position).getUnitID());
+            }
+        });
         return view;
     }
 

@@ -38,6 +38,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, DisplayUnitListener {
     private static final String TAG = String.format("%s.%s", "CLEVERTAP", MainActivity.class.getName());
@@ -51,8 +52,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     Button btnDatePicker, btnLogin, btnPushProfile, btnReset, btnPushEventNoProperty, btnPushEventStringProperty, btnPushEventIntegerProperty, btnPushEventFloatProperty, btnPushEventBooleanProperty, btnPushEventDateProperty, btnPushChargedEvent,btnScreenEvent,btnAppInbox,btnNativeDisplay;
     CleverTapAPI cleverTapAPI;
     private static final String CLEVERTAP_KEY = "CleverTap";
-    ArrayList<String> images = new ArrayList<>();
-
     ViewAdapter viewAdapter;
 
     @Override
@@ -103,7 +102,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cleverTapAPI.initializeInbox();
         cleverTapAPI.setDisplayUnitListener(this);
 
-        viewAdapter=new ViewAdapter(this);
+        viewAdapter=new ViewAdapter(this,cleverTapAPI);
         viewPager.setAdapter(viewAdapter);
         dot1.setViewPager(viewPager);
     }
@@ -267,15 +266,36 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if (!units.isEmpty()){
             llBanner.setVisibility(View.VISIBLE);
             btnNativeDisplay.requestFocus();
-            //ArrayList<String> images = new ArrayList<>();
+            ArrayList<CleverTapDisplayUnit> displayUnits = new ArrayList<>();
             ArrayList<CleverTapDisplayUnitContent> cleverTapDisplayUnitContents = new ArrayList<>();
             for (int i = 0; i <units.size() ; i++) {
-                //CleverTapDisplayUnit unit = units.get(i);
                 cleverTapDisplayUnitContents.addAll(units.get(i).getContents());
-                //prepareDisplayView(unit);
+                for (CleverTapDisplayUnitContent cleverTapDisplayUnitContent:
+                     cleverTapDisplayUnitContents) {
+                    displayUnits.add(units.get(i));
+                }
             }
-            viewAdapter.setImages(cleverTapDisplayUnitContents);
+            viewAdapter.setImages(displayUnits,cleverTapDisplayUnitContents);
             viewAdapter.notifyDataSetChanged();
+            cleverTapAPI.pushDisplayUnitViewedEventForID(displayUnits.get(0).getUnitID());
+
+            viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                @Override
+                public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+                }
+
+                @Override
+                public void onPageSelected(int position) {
+                    Toast.makeText(MainActivity.this, "Selected Item: "+units.size(), Toast.LENGTH_SHORT).show();
+                    cleverTapAPI.pushDisplayUnitViewedEventForID(displayUnits.get(position).getUnitID());
+                }
+
+                @Override
+                public void onPageScrollStateChanged(int state) {
+
+                }
+            });
         }
     }
 
