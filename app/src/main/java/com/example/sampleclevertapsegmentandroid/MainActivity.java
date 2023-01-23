@@ -14,6 +14,7 @@ import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.Html;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
@@ -194,24 +195,29 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnPushEventStringProperty:
                 Analytics.with(getApplicationContext()).track("Product Viewed",new Properties().putValue("Product Name","Apple Macbook Pro"));
-                showAlertDialog("Track","Track event with String Property raised. \n Product Name: Apple Macbook Pro","");
+                String productName = "<br><b>Product Name: Apple Macbook Pro </b>";
+                showAlertDialog("Track","Track event with String Property raised. "+ productName,"");
                 break;
             case R.id.btnPushEventIntegerProperty:
                 Analytics.with(getApplicationContext()).track("Product Viewed",new Properties().putValue("Product Id",1001));
-                showAlertDialog("Track","Track event with Integer Property raised. \n Product Id: 1001","");
+                String productId = "<br><b>Product Id: 1001</b>";
+                showAlertDialog("Track","Track event with Integer Property raised. "+productId,"");
                 break;
             case R.id.btnPushEventFloatProperty:
                 Analytics.with(getApplicationContext()).track("Product Viewed",new Properties().putValue("Product Amount",200.15f));
-                showAlertDialog("Track","Track event with Float Property raised. \n Product Amount: 200.15","");
+                String productAmount = "<br><b>Product Amount: 200.15</b>";
+                showAlertDialog("Track","Track event with Float Property raised. "+productAmount,"");
                 break;
             case R.id.btnPushEventBooleanProperty:
                 boolean b = true;
                 Analytics.with(getApplicationContext()).track("Product Viewed",new Properties().putValue("In-Stock",b));
-                showAlertDialog("Track","Track event with Boolean Property raised. \n In-Stock: TRUE","");
+                String productInStock = "<br><b>In-Stock: TRUE</b>";
+                showAlertDialog("Track","Track event with Boolean Property raised. "+productInStock,"");
                 break;
             case R.id.btnPushEventDateProperty:
                 Analytics.with(getApplicationContext()).track("Product Viewed",new Properties().putValue("Purchase Date",new Date()));
-                showAlertDialog("Track","Track event with Date Property raised. \n Purchase Date: "+new Date(),"");
+                String purchaseDate = "<br><b>Purchase Date: "+new SimpleDateFormat("dd/MM/yyyy").format(new Date())+"</b>";
+                showAlertDialog("Track","Track event with Date Property raised. "+purchaseDate,"");
                 break;
             case R.id.btnPushChargedEvent:
                 final String orderId = "123456";
@@ -224,7 +230,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 properties.putProducts(product1, product2);
 
                 Analytics.with(getApplicationContext()).track("Order Completed", properties);
-                showAlertDialog("Track","Charged (Order Completed) called. ","");
+
+                String builder = "<br><b>Order Id : " + orderId +
+                        "<br>Revenue : " + revenue +
+                        "<br>Products : " +
+                        "<br>Product Id : id1 SKU: sku1 Price: 100" +
+                        "<br>Product Id : id2 SKU: sku2 Price: 200</b>";
+
+                showAlertDialog("Track","Charged (Order Completed) called. "+ builder,"");
                 break;
             case R.id.btnAppInbox:
                 ArrayList<String> tabs = new ArrayList<>();
@@ -335,7 +348,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         AlertDialog alertDialog = new AlertDialog.Builder(this)
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .setTitle(title)
-                .setMessage(message)
+                .setMessage(Html.fromHtml(message,Html.FROM_HTML_MODE_LEGACY))
+                //.setMessage(message)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {

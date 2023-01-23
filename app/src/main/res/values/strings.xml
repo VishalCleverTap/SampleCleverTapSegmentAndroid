@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">SampleCleverTapSegmentAndroid</string>
+    <string name="app_name">CT&lt;&gt;Segment</string>
     <string name="segment_write_key">AD5JgHYCv5XiOnJG8s0gcyQ7Ub01Fpik</string>
     <string name="enter_identity">Enter Identity</string>
     <string name="enter_email">Enter Email</string>
@@ -26,4 +26,11 @@
         <item>MALE</item>
         <item>FEMALE</item>
     </array>
+
+
+    <string name="deepLinkTitle">Welcome to Deeplink Activity</string>
+    <string name="deepLinkSubTitle">Internal deeplink test</string>
+    
+    <string name="activity_main_title">CT&lt;&gt;Segment : Main Activity</string>
+    <string name="activity_deeplink_title">Deeplink Activity</string>
 </resources>

@@ -17,7 +17,30 @@
         android:theme="@style/Theme.SampleCleverTapSegmentAndroid"
         tools:targetApi="31">
         <activity
+            android:name=".DeepLinkActivity"
+            android:label="@string/activity_deeplink_title"
+            android:launchMode="singleTop"
+            android:exported="true">
+
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="www.deeplink.com"
+                    android:scheme="https" />
+                <data
+                    android:host="open.my.app"
+                    android:scheme="app" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+
+        </activity>
+        <activity
             android:name=".MainActivity"
+            android:label="@string/activity_main_title"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -31,10 +54,10 @@
         </activity>
 
         <service
-            android:name="com.example.sampleclevertapsegmentandroid.fcm.MyFirebaseMessagingService"
+            android:name=".fcm.MyFirebaseMessagingService"
             android:exported="true">
             <intent-filter>
-                <action android:name="com.google.firebase.MESSAGING_EVENT"/>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
 
